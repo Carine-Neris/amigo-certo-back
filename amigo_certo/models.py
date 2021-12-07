@@ -1,19 +1,29 @@
 from django.db import models
-from django.contrib.auth.models import AbstractUser
+from django.contrib.auth.models import User, AbstractUser
 from datetime import date
 
-    
-class Usuario(AbstractUser):
+
+
+class User(AbstractUser):
+    USER_TYPE_CHOICES = (
+      (1, 'Cliente'),
+      (2, 'Voluntário')
+    )
     username = models.CharField(max_length=50, unique=True)
     password = models.CharField(max_length=8)
     email = models.EmailField(max_length=254, unique=True, error_messages={'unique': "O email cadastrado já existe."})
-    is_staff = models.BooleanField(default=False)
-    is_superuser = models.BooleanField(default=False)
-    is_acompanhante = models.BooleanField(default=False)
-    is_cliente = models.BooleanField(default=False)
+    name = models.CharField(max_length=300)
+    telefone = models.CharField(max_length=11, null=False, blank=False)
+    cpf = models.CharField(max_length=11, null=False, blank=False)
+    data_nascimento = models.DateField(null=False, blank=False)
+    endereco = models.CharField(max_length=1000, null=False, blank=False)
+    is_staff = models.BooleanField(default=True)
+    perfil = models.PositiveSmallIntegerField(choices=USER_TYPE_CHOICES)
+    
     
     def __str__(self):
         return self.name
+
 
 
 class Necessidades(models.Model):
@@ -29,31 +39,7 @@ class Necessidades(models.Model):
     local = models.CharField(max_length=200,null=False, blank=False)
     atividades = models.CharField(
         max_length=20, choices=ATIVIDADES, blank=False, null=False)
+    cliente = models.ForeignKey(User,on_delete = models.CASCADE)
     
     def __str__(self):
         return self.motivo
-    
-
-class Acompanhante(models.Model):
-    name = models.CharField(max_length=300)
-    acompanhante = models.OneToOneField(Usuario, on_delete = models.CASCADE)
-    telefone = models.CharField(max_length=11, null=False, blank=False)
-    cpf = models.CharField(max_length=11, null=False, blank=False)
-    data_nascimento = models.DateField(null=False, blank=False)
-    endereco = models.CharField(max_length=1000, null=False, blank=False)
-
-    def __str__(self):
-        return self.acompanhante
-
-
-class Cliente(models.Model):
-    name = models.CharField(max_length=300)
-    cliente = models.OneToOneField(Usuario, on_delete = models.CASCADE)
-    telefone = models.CharField(max_length=11, null=False, blank=False)
-    cpf = models.CharField(max_length=11, null=False, blank=False)
-    data_nascimento = models.DateField(null=False, blank=False)
-    endereco = models.CharField(max_length=1000, null=False, blank=False)
-    necesidades = models.OneToOneField(Necessidades,on_delete = models.CASCADE)
-
-    def __str__(self):
-        return self.cliente

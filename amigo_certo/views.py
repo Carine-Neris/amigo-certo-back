@@ -7,18 +7,29 @@ from rest_framework.response import Response
 
 
 
-class UsuariosViewSet(viewsets.ModelViewSet):
-    queryset = models.Usuario.objects.all()
-    serializer_class = serializers.UsuarioSerializer
+class UsersViewSet(viewsets.ModelViewSet):
+    queryset = models.User.objects.all()
+    serializer_class = serializers.UserSerializer
 
-class ListaUsuarios(generics.ListAPIView):
     
+# class AcompanhanteViewSet(viewsets.ModelViewSet):
+#     queryset = models.Acompanhante.objects.all()
+#     serializer_class = serializers.AcompanhanteSerializer
+
+
+class ListNecessidadesViewSet(viewsets.ModelViewSet):
     def get_queryset(self):
-        queryset = models.Usuario.objects.all()
+        queryset = models.Necessidades.objects.all()
         return queryset
-    serializer_class = serializers.UsuarioSerializer
+
+    serializer_class = serializers.NecessidadesSerializer
+
+
+# class ClienteViewSet(viewsets.ModelViewSet):
+#     queryset = models.Cliente.objects.all()
+#     serializer_class = serializers.ClienteSerializer
     
     
-class AcompanhanteViewSet(viewsets.ModelViewSet):
-    queryset = models.Acompanhante.objects.all()
-    serializer_class = serializers.AcompanhanteSerializer
+# class PerfilViewSet(viewsets.ModelViewSet):
+#     queryset = models.Perfil.objects.all()
+#     serializer_class = serializers.PerfilSerializer

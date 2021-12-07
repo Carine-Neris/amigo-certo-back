@@ -109,4 +109,4 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-AUTH_USER_MODEL = "amigo_certo.Usuario"
+AUTH_USER_MODEL = "amigo_certo.User"
