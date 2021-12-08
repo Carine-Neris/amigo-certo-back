@@ -1,6 +1,7 @@
 from django.urls import include, path
 from rest_framework import routers
 from .views import  UsersViewSet, NecessidadesViewSet 
+from rest_framework.authtoken.views import obtain_auth_token
 
 
 router = routers.DefaultRouter()
@@ -10,5 +11,5 @@ router.register('cadastrar-necessidade', NecessidadesViewSet, base_name='necessi
 
 urlpatterns = [
     path('', include(router.urls)),
-    #path('cadastro-necessidade', NecessidadesView.as_view(), name='necessidades'),
+    path('api-token-auth/', obtain_auth_token, name='api_token_auth'),
 ]
