@@ -35,11 +35,6 @@ class UserSerializer(serializers.ModelSerializer):
         return conta
 
 
-
-# class PerfilSerializer(serializers.ModelSerializer):
-#     class Meta:
-#         model = models.Perfil
-#         fields = '__all__'
         
         
 class NecessidadesSerializer(serializers.ModelSerializer):
@@ -48,57 +43,15 @@ class NecessidadesSerializer(serializers.ModelSerializer):
         fields = '__all__'
     
 
-
-# class AcompanhanteSerializer(serializers.ModelSerializer):
-#     acompanhante = UserSerializer(required=True)
-    
-#     class Meta:
-#         model = models.Acompanhante
-#         fields = '__all__'
-
-
-#     def create(self, validated_data):
-#         import ipdb ; ipdb.set_trace()
-#         print(validated_data)
-#         user_data = validated_data.pop('acompanhante')
-#         perfil = validated_data.pop('perfil')
-#         user = UserSerializer.create(validated_data=user_data)
+    def create(self, validated_data):
         
-#     #     telefone=validated_data.pop('telefone')
-#     #     cpf=validated_data.pop('cpf')
-#     #     data_nascimento=validated_data.pop('data_nascimento')
-#     #     endereco=validated_data.pop('endereco')
-#     #     acompanante = AcompanhanteSerializer.objects.create(user=user,
-#     #                         telefone=telefone,
-#     #                         cpf=cpf,
-#     #                         data_nascimento=data_nascimento,
-#     #                         endereco=endereco
-#     #                         )
-#     #     acompanante.save()
-#     #     return acompanante
+        user = validated_data.pop('user')
+        necessidade = models.Necessidades.objects.create(user=user,
+                            motivo=self.validated_data['motivo'],
+                            periodo_inicial=self.validated_data['periodo_inicial'],
+                            periodo_final=self.validated_data['periodo_final'],
+                            local=self.validated_data['local'],
+                            atividades=self.validated_data['atividades']
+                            )
+        return necessidade
 
-
-# class ClienteSerializer(serializers.ModelSerializer):
-#     cliente = UserSerializer(required=True)
-    
-#     class Meta:
-#         model = models.Cliente
-#         fields = '__all__'
-
-
-#     def create(self, validated_data):
-
-#         user_data = validated_data.pop('acompanhante')
-#         user = UserSerializer.create(UserSerializer(), validated_data=user_data)
-#         telefone=validated_data.pop('telefone')
-#         cpf=validated_data.pop('cpf')
-#         data_nascimento=validated_data.pop('data_nascimento')
-#         endereco=validated_data.pop('endereco')
-#         acompanante = AcompanhanteSerializer.objects.create(user=user,
-#                             telefone=telefone,
-#                             cpf=cpf,
-#                             data_nascimento=data_nascimento,
-#                             endereco=endereco
-#                             )
-#         acompanante.save()
-#         return acompanante

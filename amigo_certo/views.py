@@ -1,9 +1,9 @@
-from django.shortcuts import render
 from . import models
 from . import serializers
-from django.core.paginator import Paginator
-from rest_framework import viewsets, generics
+from rest_framework import viewsets
+from rest_framework.views import APIView
 from rest_framework.response import Response
+from rest_framework import status
 
 
 
@@ -11,13 +11,8 @@ class UsersViewSet(viewsets.ModelViewSet):
     queryset = models.User.objects.all()
     serializer_class = serializers.UserSerializer
 
-    
-# class AcompanhanteViewSet(viewsets.ModelViewSet):
-#     queryset = models.Acompanhante.objects.all()
-#     serializer_class = serializers.AcompanhanteSerializer
 
-
-class ListNecessidadesViewSet(viewsets.ModelViewSet):
+class NecessidadesViewSet(viewsets.ModelViewSet):
     def get_queryset(self):
         queryset = models.Necessidades.objects.all()
         return queryset
@@ -25,11 +20,19 @@ class ListNecessidadesViewSet(viewsets.ModelViewSet):
     serializer_class = serializers.NecessidadesSerializer
 
 
-# class ClienteViewSet(viewsets.ModelViewSet):
-#     queryset = models.Cliente.objects.all()
-#     serializer_class = serializers.ClienteSerializer
+# class NecessidadesView(APIView):
     
+#     def get(self, format=None):
+        
+#         necessidades = models.Necessidades.objects.all()
+#         serializer = serializers.NecessidadesSerializer(necessidades, many=True)
+#         return Response(serializer.data)
+
+#     def post(self, request):
     
-# class PerfilViewSet(viewsets.ModelViewSet):
-#     queryset = models.Perfil.objects.all()
-#     serializer_class = serializers.PerfilSerializer
+#         serializer = serializers.NecessidadesSerializer(data=request.data)
+#         if serializer.is_valid(raise_exception=ValueError):
+#             serializer.create(validated_data=request.data)
+#             return Response(serializer.data, status=status.HTTP_201_CREATED)
+#         return Response(serializer.error_messages,
+#                         status=status.HTTP_400_BAD_REQUEST)

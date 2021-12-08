@@ -21,6 +21,10 @@ class User(AbstractUser):
     perfil = models.PositiveSmallIntegerField(choices=USER_TYPE_CHOICES)
     
     
+    USERNAME_FIELD = 'email'
+    REQUIRED_FIELDS = ['username']
+    
+    
     def __str__(self):
         return self.name
 
@@ -34,12 +38,13 @@ class Necessidades(models.Model):
         ('passear', 'Passear')
     ]
     motivo = models.CharField(max_length=200,null=False, blank=False)
-    data = models.DateField()
-    periodo = models.DateTimeField('Data de solicitação', auto_now_add=True)
+    data = models.DateField(auto_now_add=True)
+    periodo_inicial = models.DateField()
+    periodo_final = models.DateField()
     local = models.CharField(max_length=200,null=False, blank=False)
     atividades = models.CharField(
         max_length=20, choices=ATIVIDADES, blank=False, null=False)
-    cliente = models.ForeignKey(User,on_delete = models.CASCADE)
+    user = models.ForeignKey(User,on_delete = models.CASCADE)
     
     def __str__(self):
         return self.motivo

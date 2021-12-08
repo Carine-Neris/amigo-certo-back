@@ -1,15 +1,14 @@
 from django.urls import include, path
 from rest_framework import routers
-from .views import  UsersViewSet 
+from .views import  UsersViewSet, NecessidadesViewSet 
 
 
 router = routers.DefaultRouter()
-router.register('cadastrar_usuario', UsersViewSet)
-# router.register('cadastrar_acompanhante', AcompanhanteViewSet, base_name="cadastro-acompanhante")
-# router.register('cadastrar_cliente', ClienteViewSet, base_name="cadastro-cliente")
-# router.register('lista_necessidades', ListNecessidadesViewSet, base_name="necessidades")
-# router.register('cadastrar_perfil', PerfilViewSet, base_name="cadastro-perfil")
+router.register('cadastrar-usuario', UsersViewSet)
+router.register('cadastrar-necessidade', NecessidadesViewSet, base_name='necessidade')
+
 
 urlpatterns = [
     path('', include(router.urls)),
+    #path('cadastro-necessidade', NecessidadesView.as_view(), name='necessidades'),
 ]
